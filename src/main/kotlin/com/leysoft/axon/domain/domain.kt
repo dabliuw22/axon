@@ -1,7 +1,7 @@
 package com.leysoft.axon.domain
 
-import com.leysoft.axon.domain.command.*
-import com.leysoft.axon.domain.event.*
+import com.leysoft.axon.domain.command.CreatePerson
+import com.leysoft.axon.domain.event.PersonCreated
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
 import org.axonframework.modelling.command.AggregateIdentifier
@@ -9,12 +9,10 @@ import org.axonframework.modelling.command.AggregateLifecycle.apply
 import org.axonframework.spring.stereotype.Aggregate
 
 data class PersonId(val value: String)
-
 data class PersonName(val value: String)
-
 @Aggregate
 class Person {
-    
+
     @AggregateIdentifier
     lateinit var id: PersonId
 

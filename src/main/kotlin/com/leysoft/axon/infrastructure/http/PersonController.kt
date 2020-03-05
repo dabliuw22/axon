@@ -3,7 +3,6 @@ package com.leysoft.axon.infrastructure.http
 import com.leysoft.axon.core.CommandPublisher
 import com.leysoft.axon.core.QueryPublisher
 import com.leysoft.axon.domain.Person
-import com.leysoft.axon.domain.PersonId
 import com.leysoft.axon.domain.command.CreatePerson
 import com.leysoft.axon.domain.query.GetPersonById
 import org.springframework.http.ResponseEntity
