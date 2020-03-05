@@ -4,9 +4,6 @@ import com.leysoft.axon.core.Command
 import com.leysoft.axon.core.CommandPublisher
 import com.leysoft.axon.core.Query
 import com.leysoft.axon.core.QueryPublisher
-import org.axonframework.commandhandling.CommandCallback
-import org.axonframework.commandhandling.CommandMessage
-import org.axonframework.commandhandling.CommandResultMessage
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.queryhandling.QueryGateway
 import org.slf4j.LoggerFactory
