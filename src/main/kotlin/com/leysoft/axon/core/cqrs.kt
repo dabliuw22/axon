@@ -1,8 +1,14 @@
 package com.leysoft.axon.core
 
+import java.time.ZonedDateTime
 import kotlin.reflect.KClass
 
-interface Command
+interface Command {
+
+    fun id(): String
+
+    fun createdAt(): ZonedDateTime
+}
 interface Query
 interface CommandPublisher {
 

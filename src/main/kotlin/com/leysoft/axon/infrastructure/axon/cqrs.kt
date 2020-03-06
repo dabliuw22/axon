@@ -13,7 +13,10 @@ import org.springframework.stereotype.Component
 @Component
 class DefaultCommandPublisher(val gateway: CommandGateway) : CommandPublisher {
 
-    override fun publish(command: Command): Unit = gateway.sendAndWait(command)
+    override fun publish(command: Command) {
+        logger.info("Send command: ${command.id()}")
+        gateway.sendAndWait<Command>(command)
+    }
 
     companion object {
         private val logger = LoggerFactory.getLogger(DefaultCommandPublisher.javaClass)
