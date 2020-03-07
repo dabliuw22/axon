@@ -5,6 +5,8 @@ import com.leysoft.axon.core.QueryPublisher
 import com.leysoft.axon.domain.Person
 import com.leysoft.axon.domain.command.CreatePerson
 import com.leysoft.axon.domain.query.GetPersonById
+import java.net.URI
+import java.util.UUID
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -17,13 +19,16 @@ class PersonController(val queryPublisher: QueryPublisher, val commandPublisher:
 
     @GetMapping(value = ["/persons/{personId}"])
     fun getById(@PathVariable("personId") personId: String): ResponseEntity<GetPersonDto> =
-            queryPublisher.ask<Person>(personId.toQuery(), Person::class)
+            personId.toQuery().let { queryPublisher.ask<Person>(it, Person::class) }
                 .let { ResponseEntity.ok(it.toDto()) }
 
     @PostMapping(value = ["/persons"])
-    fun create(@RequestBody body: CreatePersonDto): ResponseEntity<Unit> =
-            commandPublisher.publish(CreatePerson(name = body.name))
-                .let { ResponseEntity.ok().build() }
+    fun create(@RequestBody body: CreatePersonDto): ResponseEntity<Unit> {
+        val id = UUID.randomUUID().toString()
+        return CreatePerson(id = id, name = body.name)
+          .let { commandPublisher.publish(it) }
+          .let { ResponseEntity.created(URI("/persons/$id")).build() }
+    }
 
     private fun String.toQuery(): GetPersonById = GetPersonById(this)
 

@@ -18,16 +18,16 @@ class DefaultCommandPublisher(val gateway: CommandGateway) : CommandPublisher {
         gateway.sendAndWait<Command>(command)
     }
 
-    companion object {
+        companion object {
         private val logger = LoggerFactory.getLogger(DefaultCommandPublisher.javaClass)
     }
 }
 @Component
 class DefaultQueryPublisher(val gateway: QueryGateway) : QueryPublisher {
 
-    override fun <T> ask(query: Query, clazz: KClass<*>): T = gateway
+    override fun <T> ask(query: Query, clazz: KClass<*>): T = (gateway
             .query(query, clazz.javaPrimitiveType ?: clazz.java)
-            .get() as T
+            .get() as T).also { logger.info("Ask query") }
 
     companion object {
         private val logger = LoggerFactory.getLogger(DefaultQueryPublisher.javaClass)
